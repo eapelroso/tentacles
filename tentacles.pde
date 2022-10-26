@@ -1,16 +1,15 @@
 import java.util.Iterator;
 
-int objectsNum = 60;
-int ringDistance = 20;
-int ringSpeed = 1;
-int centerMovementSpeed = 1;
-int maxDistanceToCenter = 30;
-int distanceToCenter = 0;
-boolean tentaclesMoving = true;
-boolean showRings = true;
+final int OBJECTS_COUNT = 60;
+final int RINGS_DISTANCE = 20;
+final int RINGS_SPEED = 1;
+final int CENTER_MOVEMENT_SPEED = 1;
+final int MAX_DISTANCE_TO_CENTER = 30;
+final boolean TENTACLES_MOVEMENT = true;
+final boolean SHOW_RINGS = true;
 
 //------------------------------
-
+int distanceToCenter = 0;
 boolean movingToCenter = false; 
 int colorFactor = 0;
 int globalCounter = 0;
@@ -78,8 +77,8 @@ class TrailingObject {
 } 
 
 void updateColorFactor(){ 
-  if (globalCounter % ringSpeed == 0){
-    if (colorFactor >= ringDistance) 
+  if (globalCounter % RINGS_SPEED == 0){
+    if (colorFactor >= RINGS_DISTANCE) 
       colorFactor = 1;
     else
       colorFactor += 1;   
@@ -87,8 +86,8 @@ void updateColorFactor(){
 }
 
 void updateDistanceToCenter(){  
-  if (globalCounter % centerMovementSpeed == 0){
-      if (distanceToCenter > maxDistanceToCenter)
+  if (globalCounter % CENTER_MOVEMENT_SPEED == 0){
+      if (distanceToCenter > MAX_DISTANCE_TO_CENTER)
         movingToCenter = true;
         
       if (distanceToCenter <= 0)
@@ -106,7 +105,7 @@ void setup() {
   
   objects = new ArrayList<TrailingObject>();   
   
-  for (int i = objectsNum; i > 0 ; i--){
+  for (int i = OBJECTS_COUNT; i > 0 ; i--){
      objects.add(new TrailingObject(i, 1)); 
      objects.add(new TrailingObject(i, 2)); 
      objects.add(new TrailingObject(i, 3)); 
@@ -118,10 +117,10 @@ void setup() {
 boolean isLight(int index){
   boolean result = false;
   
-  int iterations = objectsNum / ringDistance * 4;
+  int iterations = OBJECTS_COUNT / RINGS_DISTANCE * 4;
   
   for (int i = 0; i <= iterations; i++){
-    result = result || (index >= colorFactor + (ringDistance * i) && index < colorFactor + (ringDistance * i) + 4);
+    result = result || (index >= colorFactor + (RINGS_DISTANCE * i) && index < colorFactor + (RINGS_DISTANCE * i) + 4);
   }
     
   return result;
@@ -143,9 +142,9 @@ void draw() {
 
      noStroke();     
      
-     float colorValue = (i * 255 / (objectsNum * 4));
+     float colorValue = (i * 255 / (OBJECTS_COUNT * 4));
      
-     if (showRings && isLight(i)) 
+     if (SHOW_RINGS && isLight(i)) 
        fill(0, colorValue + 20, 0);
      else
       fill(0, colorValue , 0);
@@ -154,7 +153,7 @@ void draw() {
   }
  
   updateColorFactor();
-  if (tentaclesMoving) updateDistanceToCenter();
+  if (TENTACLES_MOVEMENT) updateDistanceToCenter();
   globalCounter++;
 
 }
