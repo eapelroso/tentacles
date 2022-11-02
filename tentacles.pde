@@ -21,18 +21,18 @@ class TrailingObject {
   float difY;
   float circX;
   float circY;
-  float circRadio;
-  float halfRadio;
+  float diameter;
+  float radio;
   float speed;
   int quadrant; //1-4
   
   TrailingObject(){
     speed = 5;
     quadrant = 1;
-    circRadio = 100;
-    halfRadio = circRadio / 2;
-    circX = mouseX - halfRadio;
-    circY = mouseY - halfRadio;  
+    diameter = 100;
+    radio = diameter / 2;
+    circX = mouseX - radio;
+    circY = mouseY - radio;  
   }
   
   TrailingObject(float speed, int quadrant){
@@ -44,27 +44,27 @@ class TrailingObject {
   private void adjustQuadrant(){
     switch(this.quadrant){
       case 1:
-        difX -= halfRadio + distanceToCenter;
-        difY -= halfRadio + distanceToCenter;
+        difX -= radio + distanceToCenter;
+        difY -= radio + distanceToCenter;
       break;
       case 2:
-        difX += halfRadio + distanceToCenter;
-        difY -= halfRadio + distanceToCenter;
+        difX += radio + distanceToCenter;
+        difY -= radio + distanceToCenter;
       break;
       case 3:
-        difX -= halfRadio + distanceToCenter;
-        difY += halfRadio + distanceToCenter;
+        difX -= radio + distanceToCenter;
+        difY += radio + distanceToCenter;
       break;
       case 4:
-        difX += halfRadio + distanceToCenter;
-        difY += halfRadio + distanceToCenter;
+        difX += radio + distanceToCenter;
+        difY += radio + distanceToCenter;
       break;
     }
   }
   
   void update() {           
-    circRadio = speed * 2;
-    halfRadio = circRadio / 2;
+    diameter = speed * 2;
+    radio = diameter / 2;
     
     difX = mouseX - circX;
     difY = mouseY - circY;
@@ -149,7 +149,7 @@ void draw() {
      else
       fill(0, colorValue , 0);
      
-     circle(obj.circX, obj.circY, obj.circRadio);         
+     circle(obj.circX, obj.circY, obj.diameter);         
   }
  
   updateColorFactor();
