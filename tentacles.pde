@@ -8,7 +8,6 @@ final int MAX_DISTANCE_TO_CENTER = 30;
 final boolean TENTACLES_MOVEMENT = true;
 final boolean SHOW_RINGS = true;
 
-//------------------------------
 int distanceToCenter = 0;
 boolean movingToCenter = false; 
 int colorFactor = 0;
@@ -19,10 +18,10 @@ Iterator<TrailingObject> objIterator;
 class TrailingObject { 
   float difX;
   float difY;
-  float circX;
-  float circY;
+  float xCenter;
+  float yCenter;
   float diameter;
-  float radio;
+  float radius;
   float speed;
   int quadrant; //1-4
   
@@ -30,49 +29,48 @@ class TrailingObject {
     speed = 5;
     quadrant = 1;
     diameter = 100;
-    radio = diameter / 2;
-    circX = mouseX - radio;
-    circY = mouseY - radio;  
+    radius = diameter / 2;
+    xCenter = mouseX - radius;
+    yCenter = mouseY - radius;  
   }
   
   TrailingObject(float speed, int quadrant){
     super();
-    this.speed = speed;
+    this.speed = speed;               
+    this.diameter = this.speed * 2;
+    this.radius = this.diameter / 2;
     this.quadrant = quadrant;
   }  
   
   private void adjustQuadrant(){
     switch(this.quadrant){
       case 1:
-        difX -= radio + distanceToCenter;
-        difY -= radio + distanceToCenter;
+        difX -= radius + distanceToCenter;
+        difY -= radius + distanceToCenter;
       break;
       case 2:
-        difX += radio + distanceToCenter;
-        difY -= radio + distanceToCenter;
+        difX += radius + distanceToCenter;
+        difY -= radius + distanceToCenter;
       break;
       case 3:
-        difX -= radio + distanceToCenter;
-        difY += radio + distanceToCenter;
+        difX -= radius + distanceToCenter;
+        difY += radius + distanceToCenter;
       break;
       case 4:
-        difX += radio + distanceToCenter;
-        difY += radio + distanceToCenter;
+        difX += radius + distanceToCenter;
+        difY += radius + distanceToCenter;
       break;
     }
   }
   
-  void update() {           
-    diameter = speed * 2;
-    radio = diameter / 2;
-    
-    difX = mouseX - circX;
-    difY = mouseY - circY;
+  void update() {    
+    difX = mouseX - xCenter;
+    difY = mouseY - yCenter;
     
     adjustQuadrant();
     
-    circX += difX / speed;
-    circY += difY / speed;    
+    xCenter += difX / speed;
+    yCenter += difY / speed;    
   } 
 } 
 
@@ -149,7 +147,7 @@ void draw() {
      else
       fill(0, colorValue , 0);
      
-     circle(obj.circX, obj.circY, obj.diameter);         
+     circle(obj.xCenter, obj.yCenter, obj.diameter);         
   }
  
   updateColorFactor();
